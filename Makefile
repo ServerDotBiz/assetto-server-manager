@@ -45,7 +45,7 @@ run:
 	$(MAKE) -C cmd/server-manager run
 
 docker:
-	docker build --build-arg SM_VERSION=${VERSION} -t seejy/assetto-server-manager:${VERSION} .
+	docker build --build-arg SM_VERSION=${VERSION} --build-arg PUID=1000 --build-arg PGID=1000 -t seejy/assetto-server-manager:${VERSION} .
 	docker push seejy/assetto-server-manager:${VERSION}
 ifneq ("${VERSION}", "unstable")
 	docker tag seejy/assetto-server-manager:${VERSION} seejy/assetto-server-manager:latest
