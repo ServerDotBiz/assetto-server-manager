@@ -1,5 +1,8 @@
 FROM golang:1.14 AS build
 
+ARG PUID
+ARG PGID
+
 ARG SM_VERSION
 ENV DEBIAN_FRONTEND noninteractive
 ENV BUILD_DIR ${GOPATH}/src/github.com/JustaPenguin/assetto-server-manager
@@ -41,7 +44,7 @@ RUN steamcmd.sh +login anonymous +quit; exit 0
 # dependencies for plugins, e.g. stracker, kissmyrank
 RUN apt-get update && apt-get install -y lib32gcc1 lib32stdc++6 zlib1g zlib1g lib32z1 ca-certificates && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -ms /bin/bash -u 1001 ${SERVER_USER} 
+RUN useradd -ms /bin/bash -u ${PUID} -g ${PGID} ${SERVER_USER} 
 
 RUN mkdir -p ${SERVER_MANAGER_DIR} && mkdir ${SERVER_INSTALL_DIR}
 
