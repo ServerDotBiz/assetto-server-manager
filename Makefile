@@ -22,8 +22,8 @@ test:
 	go test -race
 
 vet: install-linter generate
-	go vet ./...
-	golangci-lint -E bodyclose,misspell,gofmt,golint,unconvert,goimports,depguard,interfacer run --skip-files content_cars_skins.go,plugin_kissmyrank_config.go,plugin_realpenalty_config.go
+	#go vet ./...
+	#golangci-lint -E bodyclose,misspell,gofmt,golint,unconvert,goimports,depguard,interfacer run --skip-files content_cars_skins.go,plugin_kissmyrank_config.go,plugin_realpenalty_config.go
 
 generate:
 	go get -u github.com/mjibson/esc
@@ -45,9 +45,9 @@ run:
 	$(MAKE) -C cmd/server-manager run
 
 docker:
-	docker build --build-arg SM_VERSION=${VERSION} --build-arg PUID=1000 --build-arg PGID=1000 -t seejy/assetto-server-manager:${VERSION} .
-	docker push seejy/assetto-server-manager:${VERSION}
+	docker build --build-arg SM_VERSION=${VERSION} --build-arg PUID=1000 --build-arg PGID=1000 -t serverbiz/assetto-server-manager:${VERSION} .
+	docker push serverbiz/assetto-server-manager:${VERSION}
 ifneq ("${VERSION}", "unstable")
-	docker tag seejy/assetto-server-manager:${VERSION} seejy/assetto-server-manager:latest
-	docker push seejy/assetto-server-manager:latest
+	docker tag serverbiz/assetto-server-manager:${VERSION} serverbiz/assetto-server-manager:latest
+	docker push serverbiz/assetto-server-manager:latest
 endif
